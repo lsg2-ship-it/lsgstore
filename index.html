@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSG2 - Negozio di Abbigliamento</title>
+    <meta name="description" content="LSG2 - Il tuo negozio di abbigliamento streetwear. T-Shirt, Felpe, Cappelli e Pantaloni di qualità.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Animazioni per le scritte nello sfondo */
+        @keyframes floatText {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            10% {
+                opacity: 0.15;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(100px, -100px) rotate(10deg);
+            }
+        }
+
+        @keyframes floatText2 {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            10% {
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.25;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-80px, 80px) rotate(-8deg);
+            }
+        }
+
+        @keyframes floatText3 {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            10% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.35;
+                transform: translate(50px, 50px) scale(1.2) rotate(5deg);
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(100px, 100px) scale(1) rotate(10deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1.05);
+            }
+        }
+
+        .bg-text {
+            position: fixed;
+            font-size: 15vw;
+            font-weight: 900;
+            color: #ec4899;
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            white-space: nowrap;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .bg-text-1 {
+            top: 10%;
+            left: -5%;
+            animation: floatText 20s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .bg-text-2 {
+            top: 40%;
+            right: -5%;
+            animation: floatText2 25s ease-in-out infinite 3s;
+            opacity: 0;
+        }
+
+        .bg-text-3 {
+            top: 70%;
+            left: 10%;
+            animation: floatText3 22s ease-in-out infinite 6s;
+            opacity: 0;
+        }
+
+        .bg-text-4 {
+            top: 25%;
+            left: 30%;
+            animation: pulse 15s ease-in-out infinite 2s;
+            opacity: 0.1;
+        }
+
+        .bg-text-5 {
+            top: 55%;
+            right: 20%;
+            animation: floatText 28s ease-in-out infinite 8s;
+            opacity: 0;
+        }
+
+        .bg-text-6 {
+            top: 85%;
+            right: 40%;
+            animation: floatText2 24s ease-in-out infinite 12s;
+            opacity: 0;
+        }
+
+        .bg-text-7 {
+            top: 5%;
+            right: 30%;
+            animation: floatText3 26s ease-in-out infinite 5s;
+            opacity: 0;
+        }
+
+        .bg-text-8 {
+            top: 45%;
+            left: 5%;
+            animation: pulse 18s ease-in-out infinite 10s;
+            opacity: 0.1;
+        }
+
+        /* Contenuto sopra lo sfondo */
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="module">
+        // Dati prodotti
+        const PRODUCTS = [
+            // T-SHIRT
+            {
+                id: 1,
+                name: 'T-Shirt LSG2',
+                price: 29.99,
+                images: [
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468228753212571742/edo1.png?ex=69834215&is=6981f095&hm=932b804d5caf11c163aa5f8c4de915a1cab0c473eafcb57fd70b5a9c7de4fb7c&',
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468228944611512320/edo2.png?ex=69834242&is=6981f0c2&hm=5201a6a393d561b5206cb6d0dfc88ecb7fc2604c294fa84ea975de49e6e73cc5&'
+                ],
+                category: 'T-Shirt',
+                sizes: ['S', 'M', 'L', 'XL']
+            },
+            {
+                id: 2,
+                name: 'T-Shirt LSG2	',
+                price: 29.99,
+                images: [
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468230117690966138/ed3o.png?ex=6983435a&is=6981f1da&hm=52ff64884d8ca74fc3d7b82f340a122622ec17809bee74fc0e04ceb24deb6d31&',
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468230118089691198/edo4.png?ex=6983435a&is=6981f1da&hm=01ae405737cb7ca315f3e499bbceb0f7837ff535692e42b68c6dd6bd28973208&'
+                ],
+                category: 'T-Shirt',
+                sizes: ['XS', 'S', 'M', 'L']
+            },
+            {
+                id: 3,
+                name: 'In arrivo!!!',
+                price: 29.99,
+                images: [
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468232533622653084/SONN.png?ex=6983459a&is=6981f41a&hm=ebcac12b34a208ca8b58583f64ae66aad393b08c49562d3f1b2df1d8a00b354e&',
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468232533622653084/SONN.png?ex=6983459a&is=6981f41a&hm=ebcac12b34a208ca8b58583f64ae66aad393b08c49562d3f1b2df1d8a00b354e&'
+                ],
+                category: 'T-Shirt',
+                sizes: ['M', 'L', 'XL', 'XXL']
+            },
+            {
+                id: 4,
+                name: 'In arrivo!!!',
+                price: 29.99,
+                images: [
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468232533622653084/SONN.png?ex=6983459a&is=6981f41a&hm=ebcac12b34a208ca8b58583f64ae66aad393b08c49562d3f1b2df1d8a00b354e&',
+                    'https://cdn.discordapp.com/attachments/1465805115717062883/1468232533622653084/SONN.png?ex=6983459a&is=6981f41a&hm=ebcac12b34a208ca8b58583f64ae66aad393b08c49562d3f1b2df1d8a00b354e&'
+                ],
+                category: 'T-Shirt',
+                sizes: ['S', 'M', 'L', 'XL']
+            },
+            
+            // FELPE
+            {
+                id: 5,
+                name: 'Hoodie Premium',
+                price: 59.99,
+                images: [
+                    'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&h=600&fit=crop'
+                ],
+                category: 'Felpe',
+                sizes: ['S', 'M', 'L', 'XL']
+            },
+            {
+                id: 6,
+                name: 'Zip Hoodie',
+                price: 64.99,
+                images: [
+                    'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop'
+                ],
+                category: 'Felpe',
+                sizes: ['S', 'M', 'L', 'XL']
+            },
+            
+            // CAPPELLI
+            {
+                id: 7,
+                name: 'Cappello Baseball',
+                price: 24.99,
+                images: [
+                    'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&h=600&fit=crop'
+                ],
+                category: 'Cappelli',
+                sizes: ['Unica']
+            },
+            {
+                id: 8,
+                name: 'Beanie Classico',
+                price: 19.99,
+                images: [
+                    'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500&h=600&fit=crop'
+                ],
+                category: 'Cappelli',
+                sizes: ['Unica']
+            },
+            {
+                id: 9,
+                name: 'Bucket Hat',
+                price: 27.99,
+                images: [
+                    'https://images.unsplash.com/photo-1576662712957-9c79ae1280f8?w=500&h=600&fit=crop'
+                ],
+                category: 'Cappelli',
+                sizes: ['S/M', 'L/XL']
+            },
+            
+            // PANTALONI
+            {
+                id: 10,
+                name: 'Cargo Pants',
+                price: 69.99,
+                images: [
+                    'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=600&fit=crop'
+                ],
+                category: 'Pantaloni',
+                sizes: ['S', 'M', 'L', 'XL']
+            },
+            {
+                id: 11,
+                name: 'Jeans Straight',
+                price: 79.99,
+                images: [
+                    'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop'
+                ],
+                category: 'Pantaloni',
+                sizes: ['28', '30', '32', '34', '36']
+            },
+            {
+                id: 12,
+                name: 'Joggers Sport',
+                price: 49.99,
+                images: [
+                    'https://images.unsplash.com/photo-1517438476312-10d79c077509?w=500&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=600&fit=crop'
+                ],
+                category: 'Pantaloni',
+                sizes: ['S', 'M', 'L', 'XL']
+            }
+        ];
+
+        // State globale
+        let state = {
+            cart: [],
+            selectedCategory: 'Tutti',
+            isCartOpen: false,
+            showCheckout: false,
+            orderComplete: false,
+            zoomedProduct: null,
+            zoomedImageIndex: 0,
+            customerData: {
+                name: '',
+                email: '',
+                phone: '',
+                address: '',
+                city: '',
+                postalCode: '',
+                notes: ''
+            }
+        };
+
+        // Funzioni utility
+        function getFilteredProducts() {
+            return state.selectedCategory === 'Tutti' 
+                ? PRODUCTS 
+                : PRODUCTS.filter(p => p.category === state.selectedCategory);
+        }
+
+        function getTotalPrice() {
+            return state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        }
+
+        function getTotalItems() {
+            return state.cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        function addToCart(product, size) {
+            const existingItem = state.cart.find(item => item.id === product.id && item.size === size);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                state.cart.push({ ...product, size, quantity: 1 });
+            }
+            
+            state.isCartOpen = true;
+            render();
+        }
+
+        function updateQuantity(id, size, change) {
+            const item = state.cart.find(item => item.id === id && item.size === size);
+            if (item) {
+                item.quantity = Math.max(0, item.quantity + change);
+            }
+            state.cart = state.cart.filter(item => item.quantity > 0);
+            render();
+        }
+
+        function removeFromCart(id, size) {
+            state.cart = state.cart.filter(item => !(item.id === id && item.size === size));
+            render();
+        }
+
+        function setCategory(category) {
+            state.selectedCategory = category;
+            render();
+        }
+
+        function toggleCart() {
+            state.isCartOpen = !state.isCartOpen;
+            render();
+        }
+
+        function openCheckout() {
+            state.showCheckout = true;
+            state.isCartOpen = false;
+            render();
+        }
+
+        function closeCheckout() {
+            state.showCheckout = false;
+            render();
+        }
+
+        function handleOrder(e) {
+            e.preventDefault();
+            
+            console.log('Ordine:', {
+                customer: state.customerData,
+                items: state.cart,
+                total: getTotalPrice(),
+                paymentMethod: 'Contrassegno'
+            });
+            
+            state.orderComplete = true;
+            state.cart = [];
+            render();
+            
+            setTimeout(() => {
+                state.orderComplete = false;
+                state.showCheckout = false;
+                state.customerData = {
+                    name: '',
+                    email: '',
+                    phone: '',
+                    address: '',
+                    city: '',
+                    postalCode: '',
+                    notes: ''
+                };
+                render();
+            }, 5000);
+        }
+
+        function updateCustomerData(field, value) {
+            state.customerData[field] = value;
+        }
+
+        function openZoom(product, imageIndex = 0) {
+            state.zoomedProduct = product;
+            state.zoomedImageIndex = imageIndex;
+            render();
+        }
+
+        function closeZoom() {
+            state.zoomedProduct = null;
+            state.zoomedImageIndex = 0;
+            render();
+        }
+
+        function nextZoomedImage() {
+            if (state.zoomedProduct) {
+                state.zoomedImageIndex = (state.zoomedImageIndex + 1) % state.zoomedProduct.images.length;
+                render();
+            }
+        }
+
+        function prevZoomedImage() {
+            if (state.zoomedProduct) {
+                state.zoomedImageIndex = state.zoomedImageIndex === 0 
+                    ? state.zoomedProduct.images.length - 1 
+                    : state.zoomedImageIndex - 1;
+                render();
+            }
+        }
+
+        function goToZoomedImage(index) {
+            state.zoomedImageIndex = index;
+            render();
+        }
+
+        // Componente ProductCard
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card bg-zinc-900 rounded-xl overflow-hidden border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-pink-500/20 hover:scale-105';
+            
+            let currentImageIndex = 0;
+            let selectedSize = product.sizes[0];
+            let touchStart = 0;
+
+            function updateImage() {
+                const img = card.querySelector('.product-image');
+                const badge = card.querySelector('.image-badge');
+                const dots = card.querySelectorAll('.dot');
+                
+                if (img) {
+                    img.src = product.images[currentImageIndex];
+                }
+                if (badge && product.images.length > 1) {
+                    badge.textContent = `${currentImageIndex + 1}/${product.images.length}`;
+                }
+                dots.forEach((dot, i) => {
+                    if (i === currentImageIndex) {
+                        dot.className = 'dot w-6 h-2 rounded-full bg-pink-500 transition-all duration-300';
+                    } else {
+                        dot.className = 'dot w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-all duration-300 cursor-pointer';
+                    }
+                });
+            }
+
+            function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % product.images.length;
+                updateImage();
+            }
+
+            function prevImage() {
+                currentImageIndex = currentImageIndex === 0 ? product.images.length - 1 : currentImageIndex - 1;
+                updateImage();
+            }
+
+            function goToImage(index) {
+                currentImageIndex = index;
+                updateImage();
+            }
+
+            card.innerHTML = `
+                <div class="relative overflow-hidden aspect-[3/4] cursor-pointer" data-zoom-trigger>
+                    <img 
+                        src="${product.images[0]}" 
+                        alt="${product.name}"
+                        class="product-image w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60"></div>
+                    
+                    <!-- Badge Zoom -->
+                    <div class="absolute top-3 left-3 bg-black/70 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <i data-lucide="zoom-in" class="w-3 h-3"></i>
+                        Clicca per ingrandire
+                    </div>
+                    
+                    ${product.images.length > 1 ? `
+                        <button class="prev-btn absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10">
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        <button class="next-btn absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                        
+                        <div class="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                            ${product.images.map((_, i) => `
+                                <button class="dot ${i === 0 ? 'w-6 h-2 rounded-full bg-pink-500' : 'w-2 h-2 rounded-full bg-white/50 hover:bg-white/80'} transition-all duration-300 cursor-pointer" data-index="${i}"></button>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="image-badge absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium">
+                            1/${product.images.length}
+                        </div>
+                    ` : ''}
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">${product.name}</h3>
+                        <p class="text-2xl font-bold text-pink-400">€${product.price.toFixed(2)}</p>
+                    </div>
+                </div>
+                
+                <div class="p-4">
+                    <div class="mb-3">
+                        <label class="text-sm text-gray-400 mb-2 block">Seleziona Taglia:</label>
+                        <div class="sizes-container flex gap-2 flex-wrap">
+                            ${product.sizes.map(size => `
+                                <button class="size-btn px-4 py-2 rounded-lg font-medium transition-all duration-300 ${size === selectedSize ? 'bg-pink-500 text-white shadow-lg shadow-pink-500/50' : 'bg-pink-500/10 text-pink-300 hover:bg-pink-500/20'}" data-size="${size}">
+                                    ${size}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <button class="add-to-cart w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3 rounded-lg font-bold hover:from-pink-600 hover:to-pink-700 transition-all duration-300 shadow-lg shadow-pink-500/50 hover:shadow-pink-500/70 flex items-center justify-center gap-2 hover:scale-105">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        Aggiungi al Carrello
+                    </button>
+                </div>
+            `;
+
+            // Event listeners
+            if (product.images.length > 1) {
+                const prevBtn = card.querySelector('.prev-btn');
+                const nextBtn = card.querySelector('.next-btn');
+                const dots = card.querySelectorAll('.dot');
+                const img = card.querySelector('.product-image');
+
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    prevImage();
+                });
+
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    nextImage();
+                });
+
+                dots.forEach(dot => {
+                    dot.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        goToImage(parseInt(dot.dataset.index));
+                    });
+                });
+
+                // Touch swipe
+                img.addEventListener('touchstart', (e) => {
+                    touchStart = e.touches[0].clientX;
+                });
+
+                img.addEventListener('touchend', (e) => {
+                    const touchEnd = e.changedTouches[0].clientX;
+                    const diff = touchStart - touchEnd;
+                    
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) {
+                            nextImage();
+                        } else {
+                            prevImage();
+                        }
+                    }
+                });
+            }
+
+            // Click to zoom
+            const zoomTrigger = card.querySelector('[data-zoom-trigger]');
+            zoomTrigger.addEventListener('click', (e) => {
+                // Non aprire zoom se si sta cliccando sui controlli
+                if (e.target.closest('.prev-btn') || 
+                    e.target.closest('.next-btn') || 
+                    e.target.closest('.dot')) {
+                    return;
+                }
+                openZoom(product, currentImageIndex);
+            });
+
+            // Size selection
+            card.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedSize = btn.dataset.size;
+                    card.querySelectorAll('.size-btn').forEach(b => {
+                        b.className = 'size-btn px-4 py-2 rounded-lg font-medium transition-all duration-300 bg-pink-500/10 text-pink-300 hover:bg-pink-500/20';
+                    });
+                    btn.className = 'size-btn px-4 py-2 rounded-lg font-medium transition-all duration-300 bg-pink-500 text-white shadow-lg shadow-pink-500/50';
+                });
+            });
+
+            // Add to cart
+            card.querySelector('.add-to-cart').addEventListener('click', () => {
+                addToCart(product, selectedSize);
+            });
+
+            return card;
+        }
+
+        // Render principale
+        function render() {
+            const app = document.getElementById('app');
+            
+            const totalPrice = getTotalPrice();
+            const totalItems = getTotalItems();
+            const filteredProducts = getFilteredProducts();
+
+            app.innerHTML = `
+                <!-- Scritte animate nello sfondo -->
+                <div class="fixed inset-0 overflow-hidden pointer-events-none" style="z-index: 0;">
+                    <div class="bg-text bg-text-1">LSG2</div>
+                    <div class="bg-text bg-text-2">LSG2</div>
+                    <div class="bg-text bg-text-3">LSG2</div>
+                    <div class="bg-text bg-text-4">LSG2</div>
+                    <div class="bg-text bg-text-5">LSG2</div>
+                    <div class="bg-text bg-text-6">LSG2</div>
+                    <div class="bg-text bg-text-7">LSG2</div>
+                    <div class="bg-text bg-text-8">LSG2</div>
+                </div>
+
+                <div class="min-h-screen bg-black text-white content-layer">
+                    <!-- Header -->
+                    <header class="fixed top-0 w-full bg-black/90 backdrop-blur-lg border-b border-pink-500/20 z-50">
+                        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                            <h1 class="text-3xl font-bold gradient-text">LSG2</h1>
+                            
+                            <button id="cart-btn" class="relative p-3 bg-pink-500/10 rounded-full hover:bg-pink-500/20 transition-all duration-300 hover:scale-110">
+                                <i data-lucide="shopping-cart" class="w-6 h-6 text-pink-400"></i>
+                                ${totalItems > 0 ? `
+                                    <span class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold animate-pulse">
+                                        ${totalItems}
+                                    </span>
+                                ` : ''}
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- Filtri Categoria -->
+                    <div class="pt-24 pb-8 px-4 max-w-7xl mx-auto">
+                        <div class="flex gap-3 justify-center flex-wrap" id="categories">
+                            ${['Tutti', 'T-Shirt', 'Felpe', 'Cappelli', 'Pantaloni'].map(cat => `
+                                <button class="category-btn px-6 py-2 rounded-full font-medium transition-all duration-300 ${state.selectedCategory === cat ? 'bg-pink-500 text-white shadow-lg shadow-pink-500/50' : 'bg-pink-500/10 text-pink-300 hover:bg-pink-500/20'}" data-category="${cat}">
+                                    ${cat}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Griglia Prodotti -->
+                    <main class="max-w-7xl mx-auto px-4 pb-12">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid"></div>
+                    </main>
+
+                    <!-- Sezione Social -->
+                    <section class="max-w-7xl mx-auto px-4 pb-20">
+                        <div class="bg-gradient-to-r from-pink-500/10 to-pink-600/10 rounded-2xl border border-pink-500/30 p-8 md:p-12 text-center">
+                            <h2 class="text-3xl md:text-4xl font-bold text-pink-400 mb-4">Seguici sui Social! 🔥</h2>
+                            <p class="text-gray-300 mb-8 text-lg">
+                                Resta aggiornato sulle ultime novità, offerte esclusive e contenuti dietro le quinte
+                            </p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                                <a href="TUO_LINK_INSTAGRAM" target="_blank" class="flex items-center gap-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg shadow-pink-500/50 hover:shadow-pink-500/70 hover:scale-105 w-full sm:w-auto justify-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                    </svg>
+                                    <span>Instagram</span>
+                                </a>
+
+                                <a href="TUO_LINK_TIKTOK" target="_blank" class="flex items-center gap-3 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 border-2 border-pink-500/50 w-full sm:w-auto justify-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                                    </svg>
+                                    <span>TikTok</span>
+                                </a>
+                            </div>
+                            
+                            <p class="text-pink-300 mt-6 text-sm">
+                                💖 Tagga <span class="font-bold">@LSG2</span> nelle tue foto per essere ripostato!
+                            </p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Modal Zoom Full Screen -->
+                ${state.zoomedProduct ? `
+                    <div class="fixed inset-0 z-[60] fade-in">
+                        <div class="absolute inset-0 bg-black/95 backdrop-blur-lg" id="zoom-overlay"></div>
+                        <div class="relative h-full flex flex-col">
+                            <!-- Header -->
+                            <div class="flex items-center justify-between p-4 md:p-6 border-b border-pink-500/20">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-pink-400">${state.zoomedProduct.name}</h2>
+                                    <p class="text-lg text-gray-400">€${state.zoomedProduct.price.toFixed(2)}</p>
+                                </div>
+                                <button id="close-zoom" class="p-3 hover:bg-pink-500/10 rounded-full transition-colors">
+                                    <i data-lucide="x" class="w-7 h-7 text-pink-400"></i>
+                                </button>
+                            </div>
+
+                            <!-- Immagine Zoomabile -->
+                            <div class="flex-1 flex items-center justify-center p-4 md:p-8 overflow-hidden">
+                                <div class="relative max-w-5xl w-full h-full flex items-center justify-center">
+                                    <!-- Immagine -->
+                                    <div class="relative w-full h-full flex items-center justify-center">
+                                        <img 
+                                            src="${state.zoomedProduct.images[state.zoomedImageIndex]}" 
+                                            alt="${state.zoomedProduct.name}"
+                                            class="max-w-full max-h-full object-contain rounded-lg shadow-2xl shadow-pink-500/20 cursor-zoom-in"
+                                            id="zoom-image"
+                                            style="transition: transform 0.3s ease;"
+                                        />
+                                    </div>
+
+                                    <!-- Controlli Navigazione (se ci sono più immagini) -->
+                                    ${state.zoomedProduct.images.length > 1 ? `
+                                        <button id="zoom-prev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-4 rounded-full transition-all duration-300 shadow-lg hover:scale-110 z-10">
+                                            <i data-lucide="chevron-left" class="w-7 h-7"></i>
+                                        </button>
+                                        <button id="zoom-next" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-4 rounded-full transition-all duration-300 shadow-lg hover:scale-110 z-10">
+                                            <i data-lucide="chevron-right" class="w-7 h-7"></i>
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+
+                            <!-- Footer con Thumbnails -->
+                            ${state.zoomedProduct.images.length > 1 ? `
+                                <div class="p-4 md:p-6 border-t border-pink-500/20">
+                                    <div class="flex gap-3 justify-center overflow-x-auto hide-scrollbar">
+                                        ${state.zoomedProduct.images.map((img, i) => `
+                                            <button 
+                                                class="zoom-thumb flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden border-2 transition-all duration-300 ${i === state.zoomedImageIndex ? 'border-pink-500 scale-110 shadow-lg shadow-pink-500/50' : 'border-pink-500/20 hover:border-pink-500/50'}"
+                                                data-index="${i}"
+                                            >
+                                                <img src="${img}" alt="Thumbnail ${i + 1}" class="w-full h-full object-cover" />
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                    <p class="text-center text-pink-300 mt-3 text-sm">
+                                        ${state.zoomedImageIndex + 1} di ${state.zoomedProduct.images.length} foto
+                                    </p>
+                                </div>
+                            ` : ''}
+
+                            <!-- Istruzioni -->
+                            <div class="p-4 text-center text-gray-500 text-sm hidden md:block">
+                                <p>💡 Clicca sull'immagine per ingrandire • Usa le frecce per navigare • ESC per chiudere</p>
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+
+                <!-- Carrello Sidebar -->
+                ${state.isCartOpen ? `
+                    <div class="fixed inset-0 z-50 slide-in">
+                        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="cart-overlay"></div>
+                        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-zinc-900 shadow-2xl overflow-y-auto hide-scrollbar">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h2 class="text-2xl font-bold text-pink-400">Il Tuo Carrello</h2>
+                                    <button id="close-cart" class="p-2 hover:bg-pink-500/10 rounded-full transition-colors">
+                                        <i data-lucide="x" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
+
+                                ${state.cart.length === 0 ? `
+                                    <div class="text-center py-12">
+                                        <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto text-pink-500/30 mb-4"></i>
+                                        <p class="text-gray-400">Il carrello è vuoto</p>
+                                    </div>
+                                ` : `
+                                    <div class="space-y-4 mb-6">
+                                        ${state.cart.map(item => `
+                                            <div class="bg-black/50 rounded-lg p-4 border border-pink-500/20">
+                                                <div class="flex gap-4">
+                                                    <img src="${item.images[0]}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg" />
+                                                    <div class="flex-1">
+                                                        <h3 class="font-semibold text-pink-300">${item.name}</h3>
+                                                        <p class="text-sm text-gray-400">Taglia: ${item.size}</p>
+                                                        <p class="text-pink-400 font-bold mt-1">€${item.price.toFixed(2)}</p>
+                                                    </div>
+                                                    <button class="remove-item text-red-400 hover:text-red-300 transition-colors" data-id="${item.id}" data-size="${item.size}">
+                                                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="flex items-center justify-between mt-3">
+                                                    <div class="flex items-center gap-3 bg-pink-500/10 rounded-full p-1">
+                                                        <button class="decrease-qty w-8 h-8 flex items-center justify-center bg-pink-500/20 rounded-full hover:bg-pink-500/30 transition-colors" data-id="${item.id}" data-size="${item.size}">
+                                                            <i data-lucide="minus" class="w-4 h-4"></i>
+                                                        </button>
+                                                        <span class="w-8 text-center font-semibold">${item.quantity}</span>
+                                                        <button class="increase-qty w-8 h-8 flex items-center justify-center bg-pink-500/20 rounded-full hover:bg-pink-500/30 transition-colors" data-id="${item.id}" data-size="${item.size}">
+                                                            <i data-lucide="plus" class="w-4 h-4"></i>
+                                                        </button>
+                                                    </div>
+                                                    <span class="font-bold text-pink-400">€${(item.price * item.quantity).toFixed(2)}</span>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+
+                                    <div class="border-t border-pink-500/20 pt-4 space-y-3">
+                                        <div class="flex justify-between text-lg">
+                                            <span class="text-gray-400">Subtotale:</span>
+                                            <span class="font-bold text-pink-400">€${totalPrice.toFixed(2)}</span>
+                                        </div>
+                                        <div class="flex justify-between text-lg">
+                                            <span class="text-gray-400">Spedizione:</span>
+                                            <span class="font-bold text-pink-400">Gratis</span>
+                                        </div>
+                                        <div class="flex justify-between text-xl border-t border-pink-500/20 pt-3">
+                                            <span class="font-bold">Totale:</span>
+                                            <span class="font-bold text-pink-400">€${totalPrice.toFixed(2)}</span>
+                                        </div>
+                                        
+                                        <button id="checkout-btn" class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-4 rounded-lg font-bold text-lg hover:from-pink-600 hover:to-pink-700 transition-all duration-300 shadow-lg shadow-pink-500/50 hover:shadow-pink-500/70 hover:scale-105">
+                                            Procedi al Checkout
+                                        </button>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+
+                <!-- Checkout Modal -->
+                ${state.showCheckout ? `
+                    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 fade-in">
+                        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" id="checkout-overlay"></div>
+                        <div class="relative bg-zinc-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-pink-500/20 hide-scrollbar">
+                            ${state.orderComplete ? `
+                                <div class="p-8 text-center">
+                                    <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i data-lucide="package" class="w-10 h-10 text-green-400"></i>
+                                    </div>
+                                    <h2 class="text-3xl font-bold text-pink-400 mb-2">Ordine Confermato!</h2>
+                                    <p class="text-gray-400 mb-4">
+                                        Riceverai una email di conferma a breve.<br />
+                                        Il pagamento verrà effettuato alla consegna.
+                                    </p>
+                                    <div class="text-left bg-black/50 rounded-lg p-6 border border-pink-500/20">
+                                        <h3 class="font-bold text-pink-300 mb-3">Riepilogo Ordine:</h3>
+                                        ${state.cart.map(item => `
+                                            <div class="flex justify-between text-sm mb-2">
+                                                <span class="text-gray-400">${item.name} (${item.size}) x${item.quantity}</span>
+                                                <span class="text-pink-400">€${(item.price * item.quantity).toFixed(2)}</span>
+                                            </div>
+                                        `).join('')}
+                                        <div class="border-t border-pink-500/20 mt-3 pt-3 flex justify-between font-bold">
+                                            <span>Totale:</span>
+                                            <span class="text-pink-400">€${totalPrice.toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : `
+                                <form id="order-form" class="p-8">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h2 class="text-2xl font-bold text-pink-400">Completa l'Ordine</h2>
+                                        <button type="button" id="close-checkout" class="p-2 hover:bg-pink-500/10 rounded-full transition-colors">
+                                            <i data-lucide="x" class="w-6 h-6"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="space-y-4 mb-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-pink-300 mb-2">Nome Completo *</label>
+                                            <input type="text" required name="name" class="w-full bg-black/50 border border-pink-500/20 rounded-lg px-4 py-3 text-white focus:border-pink-500 focus:outline-none transition-colors" placeholder="Mario Rossi" />
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-pink-300 mb-2">Email *</label>
+                                                <input type="email" required name="email" class="w-full bg-black/50 border border-pink-500/20 rounded-lg px-4 py-3 text-white focus:border-pink-500 focus:outline-none transition-colors" placeholder="email@esempio.it" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-pink-300 mb-2">Telefono *</label>
+                                                <input type="tel" required name="phone" class="w-full bg-black/50 border border-pink-500/20 rounded-lg px-4 py-3 text-white focus:border-pink-500 focus:outline-none transition-colors" placeholder="+39 123 456 7890" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-pink-300 mb-2">Indirizzo *</label>
+                                            <input type="text" required name="address" class="w-full bg-black/50 border border-pink-500/20 rounded-lg px-4 py-3 text-white focus:border-pink-500 focus:outline-none transition-colors" placeholder="Via Roma 123" />
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-pink-300 mb-2">Città *</label>
+                                                <input type="text" required name="city" class="w-full bg-black/50 border border-pink-500/20 rounded-lg px-4 py-3 text-white focus:border-pink-500 focus:outline-none transition-colors" placeholder="Milano" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-pink-300 mb-2">CAP *</label>
+                                                <input type="text" required name="postalCode" class="w-full bg-black/50 border border-pink-500/20 rounded-lg px-4 py-3 text-white focus:border-pink-500 focus:outline-none transition-colors" placeholder="20100" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-pink-300 mb-2">Note (opzionale)</label>
+                                            <textarea name="notes" rows="3" class="w-full bg-black/50 border border-pink-500/20 rounded-lg px-4 py-3 text-white focus:border-pink-500 focus:outline-none transition-colors resize-none" placeholder="Istruzioni speciali per la consegna..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-black/50 rounded-lg p-4 mb-6 border border-pink-500/20">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <i data-lucide="credit-card" class="w-6 h-6 text-pink-400"></i>
+                                            <h3 class="font-bold text-pink-300">Metodo di Pagamento</h3>
+                                        </div>
+                                        <div class="bg-pink-500/10 rounded-lg p-4 border border-pink-500/30">
+                                            <p class="font-semibold text-pink-400">💰 Contrassegno (Pagamento alla Consegna)</p>
+                                            <p class="text-sm text-gray-400 mt-1">Pagherai in contanti al corriere quando riceverai il pacco</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-black/50 rounded-lg p-4 mb-6 border border-pink-500/20">
+                                        <h3 class="font-bold text-pink-300 mb-3">Riepilogo:</h3>
+                                        <div class="space-y-2 text-sm">
+                                            ${state.cart.map(item => `
+                                                <div class="flex justify-between">
+                                                    <span class="text-gray-400">${item.name} (${item.size}) x${item.quantity}</span>
+                                                    <span class="text-pink-400">€${(item.price * item.quantity).toFixed(2)}</span>
+                                                </div>
+                                            `).join('')}
+                                            <div class="border-t border-pink-500/20 pt-2 flex justify-between font-bold text-lg">
+                                                <span>Totale:</span>
+                                                <span class="text-pink-400">€${totalPrice.toFixed(2)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-4 rounded-lg font-bold text-lg hover:from-pink-600 hover:to-pink-700 transition-all duration-300 shadow-lg shadow-pink-500/50 hover:shadow-pink-500/70 hover:scale-105">
+                                        Conferma Ordine
+                                    </button>
+                                </form>
+                            `}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+
+            // Aggiungi i prodotti alla griglia
+            const productsGrid = document.getElementById('products-grid');
+            filteredProducts.forEach(product => {
+                productsGrid.appendChild(createProductCard(product));
+            });
+
+            // Initialize Lucide icons
+            lucide.createIcons();
+
+            // Event listeners
+            document.getElementById('cart-btn')?.addEventListener('click', toggleCart);
+            document.getElementById('close-cart')?.addEventListener('click', toggleCart);
+            document.getElementById('cart-overlay')?.addEventListener('click', toggleCart);
+            document.getElementById('checkout-btn')?.addEventListener('click', openCheckout);
+            document.getElementById('close-checkout')?.addEventListener('click', closeCheckout);
+            document.getElementById('checkout-overlay')?.addEventListener('click', closeCheckout);
+
+            // Categories
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => setCategory(btn.dataset.category));
+            });
+
+            // Cart actions
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    removeFromCart(parseInt(btn.dataset.id), btn.dataset.size);
+                });
+            });
+
+            document.querySelectorAll('.decrease-qty').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    updateQuantity(parseInt(btn.dataset.id), btn.dataset.size, -1);
+                });
+            });
+
+            document.querySelectorAll('.increase-qty').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    updateQuantity(parseInt(btn.dataset.id), btn.dataset.size, 1);
+                });
+            });
+
+            // Order form
+            document.getElementById('order-form')?.addEventListener('submit', handleOrder);
+
+            // Zoom modal controls
+            document.getElementById('close-zoom')?.addEventListener('click', closeZoom);
+            document.getElementById('zoom-overlay')?.addEventListener('click', closeZoom);
+            document.getElementById('zoom-prev')?.addEventListener('click', prevZoomedImage);
+            document.getElementById('zoom-next')?.addEventListener('click', nextZoomedImage);
+            
+            // Thumbnails
+            document.querySelectorAll('.zoom-thumb').forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    goToZoomedImage(parseInt(thumb.dataset.index));
+                });
+            });
+
+            // Zoom image click to enlarge
+            const zoomImage = document.getElementById('zoom-image');
+            if (zoomImage) {
+                let isZoomed = false;
+                let startX = 0;
+                let startY = 0;
+                let translateX = 0;
+                let translateY = 0;
+                let isDragging = false;
+
+                zoomImage.addEventListener('click', (e) => {
+                    if (!isDragging) {
+                        isZoomed = !isZoomed;
+                        if (isZoomed) {
+                            zoomImage.style.transform = 'scale(2)';
+                            zoomImage.style.cursor = 'grab';
+                        } else {
+                            zoomImage.style.transform = 'scale(1) translate(0, 0)';
+                            zoomImage.style.cursor = 'zoom-in';
+                            translateX = 0;
+                            translateY = 0;
+                        }
+                    }
+                });
+
+                // Dragging when zoomed
+                zoomImage.addEventListener('mousedown', (e) => {
+                    if (isZoomed) {
+                        isDragging = true;
+                        startX = e.clientX - translateX;
+                        startY = e.clientY - translateY;
+                        zoomImage.style.cursor = 'grabbing';
+                        e.preventDefault();
+                    }
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging && isZoomed) {
+                        translateX = e.clientX - startX;
+                        translateY = e.clientY - startY;
+                        zoomImage.style.transform = `scale(2) translate(${translateX}px, ${translateY}px)`;
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        if (zoomImage && isZoomed) {
+                            zoomImage.style.cursor = 'grab';
+                        }
+                    }
+                });
+
+                // Touch support
+                let touchStartX = 0;
+                let touchStartY = 0;
+
+                zoomImage.addEventListener('touchstart', (e) => {
+                    if (isZoomed && e.touches.length === 1) {
+                        touchStartX = e.touches[0].clientX - translateX;
+                        touchStartY = e.touches[0].clientY - translateY;
+                    }
+                });
+
+                zoomImage.addEventListener('touchmove', (e) => {
+                    if (isZoomed && e.touches.length === 1) {
+                        translateX = e.touches[0].clientX - touchStartX;
+                        translateY = e.touches[0].clientY - touchStartY;
+                        zoomImage.style.transform = `scale(2) translate(${translateX}px, ${translateY}px)`;
+                        e.preventDefault();
+                    }
+                });
+            }
+
+            // Keyboard navigation
+            const handleKeyPress = (e) => {
+                if (state.zoomedProduct) {
+                    if (e.key === 'Escape') {
+                        closeZoom();
+                    } else if (e.key === 'ArrowLeft') {
+                        prevZoomedImage();
+                    } else if (e.key === 'ArrowRight') {
+                        nextZoomedImage();
+                    }
+                }
+            };
+
+            document.removeEventListener('keydown', handleKeyPress);
+            document.addEventListener('keydown', handleKeyPress);
+        }
+
+        // Initialize
+        render();
+    </script>
+</body>
+</html>
